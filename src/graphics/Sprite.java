@@ -13,7 +13,7 @@ public class Sprite {
 	public int[] pixels;
 
 	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
-	public static Sprite voidSprite = new Sprite(16, 0);
+	public static Sprite voidSprite = new Sprite(16, 0xff42ea);
 
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		this.SIZE = size;

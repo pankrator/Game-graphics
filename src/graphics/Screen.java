@@ -39,20 +39,22 @@ public class Screen {
 			int ya = y + yp;
 			for (int x = 0; x < tile.sprite.SIZE; x++) {
 				int xa = x + xp;
-				if (xa < 0 || xa >= width || y < 0 || y >= height)
+				if (xa < -tile.sprite.SIZE || xa >= width || ya < 0
+						|| ya >= height)
 					break;
+				if (xa < 0)
+					xa = 0;
 				pixels[xa + ya * width] = tile.sprite.pixels[x + y
 						* tile.sprite.SIZE];
 			}
 		}
 	}
-	
-	
+
 	public void setOffSet(int xOffSet, int yOffSet) {
-		this.xOffSet=xOffSet;
-		this.yOffSet=yOffSet;
+		this.xOffSet = xOffSet;
+		this.yOffSet = yOffSet;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
