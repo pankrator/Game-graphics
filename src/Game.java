@@ -1,4 +1,3 @@
-
 import graphics.Screen;
 import input.KeyBoard;
 
@@ -11,6 +10,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
+
+import level.Level;
+import level.RandomLevel;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +27,7 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private KeyBoard keyboard;
+	private Level level;
 
 	private boolean running = false;
 
@@ -41,6 +44,7 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		frame = new JFrame();
 		keyboard = new KeyBoard();
+		level = new RandomLevel(60, 60);
 
 		addKeyListener(keyboard);
 	}
@@ -115,7 +119,7 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		screen.clear();
-		screen.render(x, y);
+		level.render(x, y, screen);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
