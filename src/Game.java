@@ -1,4 +1,6 @@
-package graphics;
+
+import graphics.Screen;
+import input.KeyBoard;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -14,18 +16,15 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	public static int width = 300;
-
 	public static int height = width / 16 * 9;
-
 	public static int scale = 3;
-	
+
 	public static String title = "Rain";
 
 	private Screen screen;
-
 	private Thread thread;
-
 	private JFrame frame;
+	private KeyBoard keyboard;
 
 	private boolean running = false;
 
@@ -41,6 +40,9 @@ public class Game extends Canvas implements Runnable {
 
 		screen = new Screen(width, height);
 		frame = new JFrame();
+		keyboard = new KeyBoard();
+
+		addKeyListener(keyboard);
 	}
 
 	public synchronized void start() {
@@ -66,7 +68,7 @@ public class Game extends Canvas implements Runnable {
 		double delta = 0;
 		int frames = 0;
 		int updates = 0;
-
+		requestFocus();
 		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
@@ -81,7 +83,8 @@ public class Game extends Canvas implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				frame.setTitle(title + " | " + updates + " ups, " + frames + " fps" );
+				frame.setTitle(title + " | " + updates + " ups, " + frames
+						+ " fps");
 				updates = 0;
 				frames = 0;
 			}
@@ -89,8 +92,19 @@ public class Game extends Canvas implements Runnable {
 		stop();
 	}
 
-	public void update() {
+	int x = 0;
+	int y = 0;
 
+	public void update() {
+		keyboard.update();
+		if (keyboard.up)
+			y--;
+		if (keyboard.down)
+			y++;
+		if (keyboard.left)
+			x--;
+		if (keyboard.right)
+			x++;
 	}
 
 	private void render() {
@@ -101,7 +115,7 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		screen.clear();
-		screen.render();
+		screen.render(x, y);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
