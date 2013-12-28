@@ -1,9 +1,11 @@
+import entity.mob.Player;
 import graphics.Screen;
 import input.KeyBoard;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -28,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	private KeyBoard keyboard;
 	private Level level;
+	private Player player;
 
 	private boolean running = false;
 
@@ -44,7 +47,8 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		frame = new JFrame();
 		keyboard = new KeyBoard();
-		level = new RandomLevel(60, 60);
+		level = new RandomLevel(1000, 1000);
+		player = new Player(keyboard);
 
 		addKeyListener(keyboard);
 	}
@@ -96,19 +100,9 @@ public class Game extends Canvas implements Runnable {
 		stop();
 	}
 
-	int x = 0;
-	int y = 0;
-
 	public void update() {
 		keyboard.update();
-		if (keyboard.up)
-			y--;
-		if (keyboard.down)
-			y++;
-		if (keyboard.left)
-			x--;
-		if (keyboard.right)
-			x++;
+		player.update();
 	}
 
 	private void render() {
@@ -119,16 +113,21 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		screen.clear();
-		level.render(x, y, screen);
+		int xScroll = player.getX() - screen.getWidth() / 2;
+		int yScroll = player.getY() - screen.getHeight() / 2;
+		level.render(xScroll,yScroll, screen);
+		player.render(screen);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
 
 		Graphics g = bs.getDrawGraphics();
-		g.setColor(new Color(200, 100, 20));
-		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Verdana", 0, 50));
+		// g.drawString("X: " + player.getX() + " Y: " + player.getY(),
+		// 450,400);
 		g.dispose();
 		bs.show();
 	}

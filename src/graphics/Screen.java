@@ -3,6 +3,7 @@ package graphics;
 import java.util.Random;
 
 import level.tile.Tile;
+import entity.mob.Player;
 
 public class Screen {
 
@@ -46,6 +47,27 @@ public class Screen {
 					xa = 0;
 				pixels[xa + ya * width] = tile.sprite.pixels[x + y
 						* tile.sprite.SIZE];
+			}
+		}
+	}
+
+	public void renderPlayer(int xp, int yp, Sprite sprite) {
+		xp -= xOffSet;
+		yp -= yOffSet;
+		for (int y = 0; y < 32; y++) {
+			int ya = y + yp;
+			int ys = 31-y;
+			for (int x = 0; x < 32; x++) {
+				int xa = x + xp;
+				int xs = 31 - x;
+				if (xa < -32 || xa >= width || ya < 0 || ya >= height)
+					break;
+				if (xa < 0)
+					xa = 0;
+				int col = sprite.pixels[xs + ys * 32];
+				// Make player sprite transparent
+				if (col != 0xFFFFFFFF)
+					pixels[xa + ya * width] = col;
 			}
 		}
 	}
