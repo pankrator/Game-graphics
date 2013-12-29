@@ -1,6 +1,9 @@
+package game;
+
 import entity.mob.Player;
 import graphics.Screen;
 import input.KeyBoard;
+import input.Mouse;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -14,14 +17,15 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import level.Level;
-import level.RandomLevel;
+import level.SpawnLevel;
+import level.TileCoordinate;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	public static int width = 300;
-	public static int height = width / 16 * 9;
-	public static int scale = 3;
+	private static int width = 300;
+	private static int height = 168;
+	private static int scale = 3;
 
 	public static String title = "Rain";
 
@@ -47,10 +51,17 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		frame = new JFrame();
 		keyboard = new KeyBoard();
-		level = new RandomLevel(1000, 1000);
-		player = new Player(keyboard);
+		level = new SpawnLevel("/textures/level.PNG");
+		TileCoordinate playerSpawn = new TileCoordinate(4, 8);
+		player = new Player(playerSpawn.x(), playerSpawn.y(), keyboard);
+		player.init(level);
+		// player = new Player(0, 0, keyboard);
 
 		addKeyListener(keyboard);
+
+		Mouse mouse = new Mouse();
+		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
 	}
 
 	public synchronized void start() {
@@ -66,6 +77,14 @@ public class Game extends Canvas implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static int getWindowWidth() {
+		return width * scale;
+	}
+
+	public static int getWindowHeight() {
+		return height * scale;
 	}
 
 	@Override
@@ -103,6 +122,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		keyboard.update();
 		player.update();
+		level.update();
 	}
 
 	private void render() {
@@ -115,7 +135,7 @@ public class Game extends Canvas implements Runnable {
 		screen.clear();
 		int xScroll = player.getX() - screen.getWidth() / 2;
 		int yScroll = player.getY() - screen.getHeight() / 2;
-		level.render(xScroll,yScroll, screen);
+		level.render(xScroll, yScroll, screen);
 		player.render(screen);
 
 		for (int i = 0; i < pixels.length; i++) {

@@ -1,6 +1,11 @@
 package entity.mob;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import entity.Entity;
+import entity.projectile.Projectile;
+import entity.projectile.WizardProjectile;
 import graphics.Screen;
 import graphics.Sprite;
 
@@ -10,7 +15,16 @@ public abstract class Mob extends Entity {
 	protected int dir = 0;
 	protected boolean move = false;
 
+	protected List<Projectile> projectiles = new ArrayList<Projectile>();
+
 	public void move(int xa, int ya) {
+		System.out.println("Size : " + projectiles.size());
+		if (xa != 0 && ya != 0) {
+			move(xa, 0);
+			move(0, ya);
+			return;
+		}
+
 		if (xa > 0)
 			dir = 1;
 		if (xa < 0)
@@ -20,7 +34,7 @@ public abstract class Mob extends Entity {
 		if (ya < 0)
 			dir = 0;
 
-		if (!collison()) {
+		if (!collison(xa, ya)) {
 			x += xa;
 			y += ya;
 		}
@@ -30,12 +44,26 @@ public abstract class Mob extends Entity {
 
 	}
 
+	protected void shoot(int x, int y, double dir) {
+		// dir *= 180 / Math.PI;
+		Projectile p = new WizardProjectile(x, y, dir);
+		projectiles.add(p);
+		level.add(p);
+	}
+
 	public void render(Screen screen) {
 
 	}
 
-	public boolean collison() {
-		return false;
+	public boolean collison(int xa, int ya) {
+		boolean solid = false;
+		for (int c = 0; c < 4; c++) { /* Corner code goes here */
+			int xt = ((x + xa) + c % 2 * 12 - 8) / 16;
+			int yt = ((y + ya) + c / 2 * 12 + 3) / 16;
+			if (level.getTitle(xt, yt).isSolid())
+				solid = true;
+		}
+		return solid;
 	}
 
 }

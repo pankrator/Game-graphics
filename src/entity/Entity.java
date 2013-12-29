@@ -12,18 +12,22 @@ public abstract class Entity {
 	private boolean removed = false;
 	protected Level level;
 	protected static final Random random = new Random();
-	
+
 	public void update() {
 	}
-	
+
 	public void render(Screen screen) {
-		
+
 	}
-	
+
+	public void init(Level level) {
+		this.level = level;
+	}
+
 	public void remove() {
 		removed = true;
 	}
-	
+
 	public boolean isRemoved() {
 		return removed;
 	}
@@ -43,5 +47,5 @@ public abstract class Entity {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 }

@@ -3,10 +3,11 @@ package level.tile;
 import graphics.Screen;
 import graphics.Sprite;
 
-public class GrassTile extends Tile {
+public class FlowerTile extends Tile {
 
-	public GrassTile(Sprite sprite) {
+	public FlowerTile(Sprite sprite) {
 		super(sprite);
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

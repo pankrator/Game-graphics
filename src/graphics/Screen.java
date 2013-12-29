@@ -3,7 +3,7 @@ package graphics;
 import java.util.Random;
 
 import level.tile.Tile;
-import entity.mob.Player;
+import entity.projectile.Projectile;
 
 public class Screen {
 
@@ -51,15 +51,40 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(int xp, int yp, Sprite sprite) {
+	public void renderProjectile(int xp, int yp, Projectile p) {
+		xp -= xOffSet;
+		yp -= yOffSet;
+		for (int y = 0; y < p.getSprite().SIZE; y++) {
+			int ya = y + yp;
+			for (int x = 0; x < p.getSprite().SIZE; x++) {
+				int xa = x + xp;
+				if (xa < -p.getSprite().SIZE || xa >= width || ya < 0
+						|| ya >= height)
+					break;
+				if (xa < 0)
+					xa = 0;
+				int col = p.getSprite().pixels[x + y * p.getSprite().SIZE];
+				if (col != 0xffff00ff)
+					pixels[xa + ya * width] = col;
+			}
+		}
+	}
+
+	public void renderPlayer(int xp, int yp, Sprite sprite, int flip) {
 		xp -= xOffSet;
 		yp -= yOffSet;
 		for (int y = 0; y < 32; y++) {
 			int ya = y + yp;
-			int ys = 31-y;
+			int ys = y;
+			if (flip == 2 || flip == 3) {
+				ys = 31 - y;
+			}
 			for (int x = 0; x < 32; x++) {
 				int xa = x + xp;
-				int xs = 31 - x;
+				int xs = x;
+				if (flip == 1 || flip == 3) {
+					xs = 31 - x;
+				}
 				if (xa < -32 || xa >= width || ya < 0 || ya >= height)
 					break;
 				if (xa < 0)
