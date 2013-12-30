@@ -7,7 +7,7 @@ public class WizardProjectile extends Projectile {
 
 	public WizardProjectile(int x, int y, double dir) {
 		super(x, y, dir);
-		range = 2;
+		range = rand.nextInt(100) + 150;
 		damage = 20;
 		rateOfFire = 15;
 		speed = 4;

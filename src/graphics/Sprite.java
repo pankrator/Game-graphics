@@ -1,6 +1,5 @@
 package graphics;
 
-import javax.print.attribute.Size2DSyntax;
 
 public class Sprite {
 
