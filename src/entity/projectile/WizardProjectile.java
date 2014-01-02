@@ -5,9 +5,11 @@ import graphics.Sprite;
 
 public class WizardProjectile extends Projectile {
 
+	public static final int FIRE_RATE = 15;
+
 	public WizardProjectile(int x, int y, double dir) {
 		super(x, y, dir);
-		range = rand.nextInt(100) + 150;
+		range = 100;
 		damage = 20;
 		rateOfFire = 15;
 		speed = 4;
@@ -18,6 +20,8 @@ public class WizardProjectile extends Projectile {
 
 	@Override
 	public void update() {
+		if (level.tileCollision(x, y, nx, ny, 8))
+			remove();
 		move();
 	}
 

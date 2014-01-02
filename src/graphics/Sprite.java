@@ -1,6 +1,5 @@
 package graphics;
 
-
 public class Sprite {
 
 	public final int SIZE;
@@ -8,6 +7,8 @@ public class Sprite {
 	private int x, y;
 
 	private SpriteSheet sheet;
+
+	private int width, height;
 
 	public int[] pixels;
 
@@ -33,6 +34,14 @@ public class Sprite {
 		load();
 	}
 
+	public Sprite(int width, int height, int color) {
+		SIZE = -1;
+		this.width = width;
+		this.height = height;
+		setColor(color);
+
+	}
+
 	public Sprite(int size, int color) {
 		this.SIZE = size;
 		pixels = new int[SIZE * SIZE];
@@ -43,6 +52,14 @@ public class Sprite {
 		for (int i = 0; i < SIZE * SIZE; i++) {
 			pixels[i] = color;
 		}
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	private void load() {

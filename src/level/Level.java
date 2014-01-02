@@ -46,6 +46,18 @@ public class Level {
 		}
 	}
 
+	public boolean tileCollision(double x, double y, double xa, double ya,
+			int size) {
+		boolean solid = false;
+		for (int c = 0; c < 4; c++) { /* Corner code goes here */
+			int xt = (((int) x + (int) xa) + c % 2 * size * 2 - 12) / 16;
+			int yt = (((int) y + (int) ya) + c / 2 * size + 2) / 16;
+			if (getTitle(xt, yt).isSolid())
+				solid = true;
+		}
+		return solid;
+	}
+
 	public void render(int xScroll, int yScroll, Screen screen) {
 		screen.setOffSet(xScroll, yScroll);
 		int x0 = xScroll >> 4;
@@ -65,18 +77,18 @@ public class Level {
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);
 		}
-		
+
 	}
 
 	public void add(Entity e) {
 		entities.add(e);
 	}
-	
-	
+
 	public void addProjectile(Projectile p) {
+		p.init(this);
 		projectiles.add(p);
 	}
-	
+
 	public List<Projectile> getProjectiles() {
 		return projectiles;
 	}

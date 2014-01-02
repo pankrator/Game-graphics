@@ -33,6 +33,14 @@ public class Screen {
 		}
 	}
 
+	public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed) {
+		if (fixed) {
+			xp -= xOffSet;
+			yp -= yOffSet;
+		}
+		
+	}
+
 	public void renderTile(int xp, int yp, Tile tile) {
 		xp -= xOffSet;
 		yp -= yOffSet;

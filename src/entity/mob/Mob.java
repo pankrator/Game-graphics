@@ -1,8 +1,5 @@
 package entity.mob;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import entity.Entity;
 import entity.projectile.Projectile;
 import entity.projectile.WizardProjectile;
@@ -14,8 +11,6 @@ public abstract class Mob extends Entity {
 	protected Sprite sprite;
 	protected int dir = 0;
 	protected boolean move = false;
-
-	protected List<Projectile> projectiles = new ArrayList<Projectile>();
 
 	public void move(int xa, int ya) {
 		if (xa != 0 && ya != 0) {
@@ -33,7 +28,7 @@ public abstract class Mob extends Entity {
 		if (ya < 0)
 			dir = 0;
 
-		if (!collison(xa, ya)) {
+		if (!collision(xa, ya)) {
 			x += xa;
 			y += ya;
 		}
@@ -53,7 +48,7 @@ public abstract class Mob extends Entity {
 
 	}
 
-	public boolean collison(int xa, int ya) {
+	private boolean collision(int xa, int ya) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) { /* Corner code goes here */
 			int xt = ((x + xa) + c % 2 * 12 - 8) / 16;

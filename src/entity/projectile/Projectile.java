@@ -3,6 +3,7 @@ package entity.projectile;
 import java.util.Random;
 
 import entity.Entity;
+import game.Game;
 import graphics.Sprite;
 
 public abstract class Projectile extends Entity {
@@ -23,6 +24,7 @@ public abstract class Projectile extends Entity {
 		this.x = x;
 		this.y = y;
 		angle = dir;
+
 	}
 
 	protected void move() {
