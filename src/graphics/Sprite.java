@@ -25,8 +25,13 @@ public class Sprite {
 	public static Sprite flower = new Sprite(16, 1, 0, SpriteSheet.tiles);
 	public static Sprite rock = new Sprite(16, 2, 0, SpriteSheet.tiles);
 
+	// Particles
+	public static Sprite particle_normal = new Sprite(3, 0xAAAAAA);
+
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		this.SIZE = size;
+		this.width = size;
+		this.height = size;
 		this.pixels = new int[SIZE * SIZE];
 		this.x = x * size;
 		this.y = y * size;
@@ -38,18 +43,21 @@ public class Sprite {
 		SIZE = -1;
 		this.width = width;
 		this.height = height;
+		pixels = new int[width * height];
 		setColor(color);
 
 	}
 
 	public Sprite(int size, int color) {
 		this.SIZE = size;
+		this.width = size;
+		this.height = size;
 		pixels = new int[SIZE * SIZE];
 		setColor(color);
 	}
 
 	private void setColor(int color) {
-		for (int i = 0; i < SIZE * SIZE; i++) {
+		for (int i = 0; i < width * height; i++) {
 			pixels[i] = color;
 		}
 	}
