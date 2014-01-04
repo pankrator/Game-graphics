@@ -69,12 +69,12 @@ public class Level {
 		}
 	}
 
-	public boolean tileCollision(double x, double y, double xa, double ya,
-			int size) {
+	public boolean tileCollision(int x, int y, int size, int xOffSet,
+			int yOffSet) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) { /* Corner code goes here */
-			int xt = (((int) x + (int) xa) + c % 2 * size * 2 - 12) / 16;
-			int yt = (((int) y + (int) ya) + c / 2 * size + 2) / 16;
+			int xt = (x - c % 2 * size + xOffSet) >> 4;
+			int yt = (y - c / 2 * size + yOffSet) >> 4;
 			if (getTitle(xt, yt).isSolid())
 				solid = true;
 		}
