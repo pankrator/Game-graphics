@@ -1,5 +1,7 @@
 package entity.mob;
 
+import java.awt.Color;
+
 import entity.projectile.Projectile;
 import entity.projectile.WizardProjectile;
 import game.Game;

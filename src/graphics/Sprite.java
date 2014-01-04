@@ -28,6 +28,10 @@ public class Sprite {
 	// Particles
 	public static Sprite particle_normal = new Sprite(3, 0xAAAAAA);
 
+	public Sprite(int size, SpriteSheet sheet) {
+
+	}
+
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		this.SIZE = size;
 		this.width = size;
