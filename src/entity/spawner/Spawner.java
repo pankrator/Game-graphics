@@ -2,7 +2,6 @@ package entity.spawner;
 
 import level.Level;
 import entity.Entity;
-import entity.particle.Particle;
 
 public class Spawner extends Entity {
 

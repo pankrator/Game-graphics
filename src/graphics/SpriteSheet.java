@@ -16,6 +16,8 @@ public class SpriteSheet {
 	public static SpriteSheet tiles = new SpriteSheet(
 			"/textures/spritesheet.png", 256);
 
+	private Sprite[] sprites;
+
 	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height,
 			int spriteSize) {
 		int xx = x * spriteSize;
@@ -37,6 +39,26 @@ public class SpriteSheet {
 			}
 		}
 
+		int frame = 0;
+		sprites = new Sprite[width * height];
+		for (int ya = 0; ya < height; ya++) {
+			for (int xa = 0; xa < width; xa++) {
+				frame++;
+				int[] spritePixels = new int[spriteSize * spriteSize];
+				for (int yf = 0; yf < spriteSize; yf++) {
+					for (int xf = 0; xf < spriteSize; xf++) {
+
+						spritePixels[xf + yf * spriteSize] = pixels[(xf + xa
+								* spriteSize)
+								+ (yf + ya * spriteSize) * WIDTH];
+					}
+				}
+				Sprite sprite = new Sprite(spritePixels, spriteSize, spriteSize);
+				sprites[frame++] = sprite;
+
+			}
+		}
+
 	}
 
 	public SpriteSheet(String path, int size) {
@@ -55,6 +77,10 @@ public class SpriteSheet {
 		this.HEIGHT = height;
 		pixels = new int[width * height];
 		load();
+	}
+
+	public Sprite[] getSprites() {
+		return sprites;
 	}
 
 	private void load() {
