@@ -1,5 +1,6 @@
 package level;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,8 @@ import level.tile.Tile;
 import entity.Entity;
 import entity.particle.Particle;
 import entity.projectile.Projectile;
-import entity.spawner.Spawner;
 import graphics.Screen;
+import graphics.Sprite;
 
 public class Level {
 
