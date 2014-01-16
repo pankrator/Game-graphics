@@ -7,7 +7,6 @@ import level.tile.Tile;
 import entity.Entity;
 import entity.particle.Particle;
 import entity.projectile.Projectile;
-import entity.spawner.Spawner;
 import graphics.Screen;
 
 public class Level {
