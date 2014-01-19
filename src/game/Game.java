@@ -138,6 +138,8 @@ public class Game extends Canvas implements Runnable {
 		int yScroll = player.getY() - screen.getHeight() / 2;
 		level.render(xScroll, yScroll, screen);
 		player.render(screen);
+		level.renderLightning(xScroll, yScroll, screen);
+
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];

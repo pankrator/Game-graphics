@@ -1,6 +1,5 @@
 package level;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +8,14 @@ import entity.Entity;
 import entity.particle.Particle;
 import entity.projectile.Projectile;
 import graphics.Screen;
-import graphics.Sprite;
 
 public class Level {
 
 	protected int width, height;
 	protected int[] tilesInt;
 	protected int[] tiles;
+
+	public static int[] fog;
 
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
@@ -95,6 +95,24 @@ public class Level {
 			}
 		}
 
+	}
+
+	public void renderLightning(int xScroll, int yScroll, Screen screen) {
+		xScroll -= 4 * 16;
+		yScroll -= 4 * 16;
+		int x0 = xScroll >> 4;
+		int x1 = (xScroll + screen.getWidth() + 9 * 16) >> 4;
+		int y0 = yScroll >> 4;
+		int y1 = (yScroll + screen.getHeight() + 9 * 16) >> 4;
+		for (int y = y0; y < y1; y++) {
+			for (int x = x0; x < x1; x++) {
+				if (x < 0 || y < 0 || x >= width || y >= height)
+					continue;
+				if (tiles[x + y * width] == 0xFFFF0000)
+					Tile.torch.render(x, y, screen);
+			}
+		}
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen);
 		}
@@ -128,6 +146,7 @@ public class Level {
 	public Tile getTitle(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height)
 			return Tile.voidTile;
+
 		if (tiles[x + y * width] == 0xFF00FF00)
 			return Tile.grass;
 		if (tiles[x + y * width] == 0xFFFFFF00)

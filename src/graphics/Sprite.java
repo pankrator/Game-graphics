@@ -1,5 +1,7 @@
 package graphics;
 
+import java.util.Random;
+
 public class Sprite {
 
 	public final int SIZE;
@@ -12,18 +14,13 @@ public class Sprite {
 
 	public int[] pixels;
 
-	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles,true);
+	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles, true);
 	public static Sprite voidSprite = new Sprite(16, 0x0000ffff);
 
-	public static Sprite player = new Sprite(32, 0, 1, SpriteSheet.tiles,false);
+	public static Sprite player = new Sprite(32, 0, 1, SpriteSheet.tiles, false);
 
-//	public static Sprite player_forward_1 = new Sprite(32, 0, 2,
-//			SpriteSheet.tiles);
-//	public static Sprite player_forward_2 = new Sprite(32, 0, 2,
-//			SpriteSheet.tiles);
-
-	public static Sprite flower = new Sprite(16, 1, 0, SpriteSheet.tiles,true);
-	public static Sprite rock = new Sprite(16, 2, 0, SpriteSheet.tiles,true);
+	public static Sprite flower = new Sprite(16, 1, 0, SpriteSheet.tiles, true);
+	public static Sprite rock = new Sprite(16, 2, 0, SpriteSheet.tiles, true);
 
 	// Particles
 	public static Sprite particle_normal = new Sprite(3, 0xAAAAAA);
@@ -35,7 +32,7 @@ public class Sprite {
 		this.sheet = sheet;
 	}
 
-	public Sprite(int size, int x, int y, SpriteSheet sheet,boolean lightning) {
+	public Sprite(int size, int x, int y, SpriteSheet sheet, boolean lightning) {
 		this.SIZE = size;
 		this.width = size;
 		this.height = size;
@@ -75,7 +72,7 @@ public class Sprite {
 		}
 	}
 
-	private int darkenColor(int color, int percent) {
+	public static int darkenColor(int color, int percent) {
 		int amt = (int) Math.round(2.55 * percent);
 		int R = ((color >> 16) & 0x00ff) + amt;
 		int G = ((color >> 8) & 0x00ff) + amt;

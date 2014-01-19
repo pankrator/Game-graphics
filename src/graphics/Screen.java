@@ -2,6 +2,7 @@ package graphics;
 
 import java.util.Random;
 
+import level.Level;
 import level.tile.Tile;
 import entity.projectile.Projectile;
 
@@ -84,6 +85,44 @@ public class Screen {
 		}
 	}
 
+	public void renderTorchTile(int xp, int yp, Tile tile) {
+		xp -= xOffSet;
+		yp -= yOffSet;
+		for (int i = 1; i <= 3; i++) {
+			changeTileLightining(xp - i * 16, yp, 16, 16, 45 - (i - 1) * 15);
+			changeTileLightining(xp, yp - i * 16, 16, 16, 45 - (i - 1) * 15);
+			changeTileLightining(xp, yp + i * 16, 16, 16, 45 - (i - 1) * 15);
+			changeTileLightining(xp + i * 16, yp, 16, 16, 45 - (i - 1) * 15);
+
+			changeTileLightining(xp - i * 16, yp - i * 16, 16, 16,
+					45 - (i - 1) * 15);
+			changeTileLightining(xp + i * 16, yp - i * 16, 16, 16,
+					45 - (i - 1) * 15);
+			changeTileLightining(xp - i * 16, yp + i * 16, 16, 16,
+					45 - (i - 1) * 15);
+			changeTileLightining(xp + i * 16, yp + i * 16, 16, 16,
+					45 - (i - 1) * 15);
+		}
+	}
+
+	private void changeTileLightining(int xp, int yp, int width, int height,
+			int amount) {
+
+		for (int y = 0; y < height; y++) {
+			int ya = y + yp;
+			for (int x = 0; x < width; x++) {
+				int xa = x + xp;
+				if (xa < -16 || xa >= this.width || ya < 0 || ya >= this.height)
+					break;
+				if (xa < 0)
+					xa = 0;
+				int color = pixels[xa + ya * this.width];
+				color = Sprite.darkenColor(color, amount);
+				pixels[xa + ya * this.width] = color;
+			}
+		}
+	}
+
 	public void renderProjectile(int xp, int yp, Projectile p) {
 		xp -= xOffSet;
 		yp -= yOffSet;
@@ -124,8 +163,10 @@ public class Screen {
 					xa = 0;
 				int col = sprite.pixels[xs + ys * 32];
 				// Make player sprite transparent
-				if (col != 0xFFFFFFFF)
+				if (col != 0xFFFFFFFF) {
+//					col = Sprite.darkenColor(col, -70);
 					pixels[xa + ya * width] = col;
+				}
 			}
 		}
 	}
