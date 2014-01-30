@@ -21,6 +21,7 @@ import level.Level;
 import level.SpawnLevel;
 import level.TileCoordinate;
 
+//Mimi added comment on class Game
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
